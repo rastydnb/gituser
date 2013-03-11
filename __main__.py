@@ -32,32 +32,45 @@ else:
 
     if menuopt == '0':
         envid = raw_input('Enter envs id to set it: ')
+        helper.Helpers.setUser(envs, envid)
     elif menuopt=='1':
         other = 'y'
         while other == 'y' or other == '':
             envid = raw_input('Enter env id: ')
             name = raw_input('Enter name: ')
             mail = raw_input('Enter email: ')
-            sshkey = raw_input('Generate RSA public and private key[y/n]:')
-            exit = True
-            if sshkey == 'y':
-                exit = False
-            elif sshkey == 'n':
-                exit = False
-            while exit :
-                print 'Enter[y/n]'
-                sshkey = raw_input('Generate RSA public and private key[y/n]:')
-                if sshkey == 'y':
-                    exit = False
-                elif sshkey == 'n':
-                    exit = False
+            sshkey = raw_input('Enter your Own ssh-key or Generate one [O/G]')
 
-            print sshkey == 'Y'
-            print sshkey
-            if sshkey == 'y':
-                print 'momia'
-                ssh.Ssh.createKey(mail)
-            envs[envid] = [mail, name, sshkey]
+############################
+            # sshkey = raw_input('Generate RSA public and private key? [y/n]:')
+            # exit = True
+            # if sshkey == 'y':
+            #     exit = False
+            # elif sshkey == 'n':
+            #     exit = False
+            # while exit :
+            #     print 'Enter[y/n]'
+            #     sshkey = raw_input('Generate RSA public and private key? [y/n]:')
+            #     if sshkey == 'y':
+            #         exit = False
+            #     elif sshkey == 'n':
+            #         exit = False
+###########################
+
+            exit = 0
+            while exit == 0:
+                os.system('clear')
+                if sshkey != 'G' or sshkey != 'O':
+                    sshkey = raw_input('Incorrect option enter "O" or "G":')
+
+                if sshkey == 'G':
+                    key = ssh.Ssh.createKey(mail)
+                    exit = 1
+                elif sshkey == 'O':
+                    key = raw_input('Enter ssh key path: ')
+                    exit = 1
+
+            envs[envid] = [mail, name, key]
             other = raw_input('Add other env[y/n]: ')
         xml.createConfigFile(envs)
         os.system('clear')
@@ -73,11 +86,13 @@ else:
         name  = raw_input('Enter name: ')
         mail  = raw_input('Enter email: ')
         sshkey = raw_input('[y/n]: ')
-        if sshkey == 'Y':
+        if sshkey == 'y':
             ssh.Ssh.createKey(mail)
         envs[envid] = [mail, name, sshkey]
         xml.createConfigFile(envs)
         os.system('clear')
+    elif menuopt == '4':
+        exit()
 
 
 
