@@ -40,27 +40,10 @@ else:
             name = raw_input('Enter name: ')
             mail = raw_input('Enter email: ')
             sshkey = raw_input('Enter your Own ssh-key or Generate one [O/G]')
-
-############################
-            # sshkey = raw_input('Generate RSA public and private key? [y/n]:')
-            # exit = True
-            # if sshkey == 'y':
-            #     exit = False
-            # elif sshkey == 'n':
-            #     exit = False
-            # while exit :
-            #     print 'Enter[y/n]'
-            #     sshkey = raw_input('Generate RSA public and private key? [y/n]:')
-            #     if sshkey == 'y':
-            #         exit = False
-            #     elif sshkey == 'n':
-            #         exit = False
-###########################
-
             exit = 0
             while exit == 0:
                 os.system('clear')
-                if sshkey != 'G' or sshkey != 'O':
+                if sshkey != 'G' and sshkey != 'O':
                     sshkey = raw_input('Incorrect option enter "O" or "G":')
 
                 if sshkey == 'G':
@@ -74,11 +57,17 @@ else:
             other = raw_input('Add other env[y/n]: ')
         xml.createConfigFile(envs)
         os.system('clear')
+        helper.Helpers.listenv(envs)
+        helper.Helpers.menu()
+        menuopt = raw_input('Enter option: ')
     elif menuopt == '2':
         envid = raw_input('Enter env id tu delete: ')
         del envs[envid]
         xml.createConfigFile(envs)
         os.system('clear')
+        helper.Helpers.listenv(envs)
+        helper.Helpers.menu()
+        menuopt = raw_input('Enter option: ')
     elif menuopt == '3':
         envid = raw_input('Enter env id tu modify: ')
         del envs[envid]
@@ -91,6 +80,9 @@ else:
         envs[envid] = [mail, name, sshkey]
         xml.createConfigFile(envs)
         os.system('clear')
+        helper.Helpers.listenv(envs)
+        helper.Helpers.menu()
+        menuopt = raw_input('Enter option: ')
     elif menuopt == '4':
         exit()
 
